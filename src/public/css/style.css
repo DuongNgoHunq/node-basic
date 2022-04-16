@@ -32,7 +32,9 @@ body {
     border-collapse: collapse;
     width: 100%;
   }
-  
+  .actions{
+    display: flex;
+  }
   th{
       background-color: #04AA6D;
   }
