@@ -1,15 +1,14 @@
 import express from "express";
-import { getHomepage } from "../contronller/homeController"; '../contronller/homeController';
+import homeController from "../contronller/homeController"; '../contronller/homeController';
 
 let router = express.Router();
 
 const initWebRoute = (app) =>{
-    // app.METHOD(PATH, HANDLER)
-    
-    router.get('/', getHomepage);
-    
+    router.get('/', homeController.getHomepage);
+    router.get('/detail/user/:id', homeController.getDetailPage)
+    router.post('/create-new-user', homeController.createNewUser)
     router.get('/about', (req, res) =>{
-        res.send(`Name: Duong Ngoo Hung 
+        res.send(`Name: Duong Ngo Hung 
          age: 21
          status: singer
         `)
