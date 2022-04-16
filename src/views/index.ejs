@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,10 +9,46 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- <link rel="stylesheet" href="/css/style.css"> -->
 </head>
+
 <body>
-    <h1>
-        hello world from node basic
-    </h1>
-    <%= dataUser %>
+    <div class="topnav">
+        <a class="active" href="#home">Home</a>
+        <a href="#news">News</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+    </div>
+        <h3>Listuser table</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>address</th>
+                <th>action</th>
+            </tr>
+            
+            <% for(let i=0; i < dataUser.length; i++) { %>
+                <tr>
+                    <td>
+                        <%= dataUser[i].id %>
+                    </td>
+                    <td>
+                        <%= dataUser[i].firstName %>
+                    </td>
+                    <td>
+                        <%= dataUser[i].lastName %>
+                    </td>
+                    <td>
+                        <%= dataUser[i].address %>
+                    </td>
+                    <td>
+                        <button type="button">Detail</button>
+                        <button type="button">Edit</button>
+                        <button type="button">Delete</button>
+                    </td>
+                </tr>
+                <% } %>
+        </table>
 </body>
+
 </html>
