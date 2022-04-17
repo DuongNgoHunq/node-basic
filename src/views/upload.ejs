@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node basic</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/upload-file" class="active">Upload</a>
+    </div>
+    <div class="upload-file-container">
+        <form method="POST" action="/upload-profile-pic" enctype="multipart/form-data">
+            <div>
+                <label>Avartar: </label> <br>
+            </div>
+            <div>
+                <input type="file" name="profile_pic" />
+            </div>
+            <button class="btn-submit" type="submit">Save file</button>
+        </form>
+
+        <form method="POST" action="/upload-multiple-images" enctype="multipart/form-data">
+            <div>
+                <label>Select multiple images:</label>
+            </div>
+            <div>
+                <input type="file" name="multiple_images" multiple/>
+            </div>
+
+            <div>
+                <input class="btn-submit" type="submit" name="btn_upload_multiple_images" value="Upload" />
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

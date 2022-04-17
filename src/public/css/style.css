@@ -59,4 +59,13 @@ body {
     background-color: #04AA6D;
     cursor: pointer;
   }
+  .upload-file-container {
+    padding: 15px;
+  }
+.btn-submit{
+    margin:15px 0;
+    background-color: #04AA6D;
+    cursor: pointer;
+  }
+
   

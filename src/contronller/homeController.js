@@ -1,5 +1,5 @@
 import pool from '../configs/connectDB';
-
+import multer from'multer'
 let getHomepage = async (req, res) => {
    
     const [rows, fields] = await pool.execute('SELECT * FROM users');
@@ -16,7 +16,7 @@ let getDetailPage =async(req, res) =>{
 }
 
 let createNewUser = async(req, res) =>{
-    console.log('>>>Check req: ', req);
+    
     let {firstName, lastName, email, address} = req.body;
     await pool.execute('INSERT INTO users (firstName, lastName, email, address) VALUES (?, ?, ?, ?)',
     [firstName, lastName, email, address])
@@ -41,6 +41,34 @@ let postUpdateUser = async(req, res) =>{
     [firstName, lastName, email, address, id])
     return res.redirect("/")
 }
+
+let uploadFile = async (req, res) =>{
+    return res.render('upload.ejs')
+}
+const upload = multer().single('profile_pic');
+let handleUploadFile = async(req, res) =>{
+
+    upload(req, res, function(err) {
+        // req.file contains information of uploaded file
+        // req.body contains information of text fields, if there were any
+
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.file) {
+            return res.send('Please select an image to upload');
+        }
+        else if (err instanceof multer.MulterError) {
+            return res.send(err);
+        }
+        else if (err) {
+            return res.send(err);
+        }
+        // Display uploaded image for user validation
+        res.send(`You have uploaded this image: <hr/><img src="/image/${req.file.filename}" width="500"><hr /><a href="./upload-file">Upload another image</a>`);
+    });
+}
 module.exports = {
-    getHomepage, getDetailPage, createNewUser, deleteUser, editUserPage, postUpdateUser
+    getHomepage, getDetailPage, createNewUser, deleteUser, editUserPage, postUpdateUser,
+    uploadFile,handleUploadFile
 }
