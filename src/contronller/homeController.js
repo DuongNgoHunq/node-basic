@@ -1,5 +1,5 @@
 import pool from '../configs/connectDB';
-import multer from'multer'
+
 let getHomepage = async (req, res) => {
    
     const [rows, fields] = await pool.execute('SELECT * FROM users');
@@ -45,12 +45,7 @@ let postUpdateUser = async(req, res) =>{
 let uploadFile = async (req, res) =>{
     return res.render('upload.ejs')
 }
-const upload = multer().single('profile_pic');
 let handleUploadFile = async(req, res) =>{
-
-    upload(req, res, function(err) {
-        // req.file contains information of uploaded file
-        // req.body contains information of text fields, if there were any
 
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
@@ -58,17 +53,36 @@ let handleUploadFile = async(req, res) =>{
         else if (!req.file) {
             return res.send('Please select an image to upload');
         }
-        else if (err instanceof multer.MulterError) {
-            return res.send(err);
-        }
-        else if (err) {
-            return res.send(err);
-        }
-        // Display uploaded image for user validation
         res.send(`You have uploaded this image: <hr/><img src="/image/${req.file.filename}" width="500"><hr /><a href="./upload-file">Upload another image</a>`);
-    });
 }
+
+// upload multiple file
+
+let handleUploadMultipleFiles = async(req, res) =>{
+
+    // upload(req, res, function(err) {
+        console.log(req.files);
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.files) {
+            return res.send('Please select an image to upload');
+        }
+
+        let result = "You have uploaded these images: <hr />";
+        const files = req.files;
+        console.log(">>>check files path: ", files);
+        let index, len;
+
+        // Loop through all the uploaded images and display them on frontend
+        for (index = 0, len = files.length; index < len; ++index) {
+            result += `<img src="/image/${files[index].filename}" width="300" style="margin-right: 20px;">`;
+        }
+        result += '<hr/><a href="/upload-file">Upload more im  ages</a>';
+        res.send(result);
+    // });
+} 
 module.exports = {
     getHomepage, getDetailPage, createNewUser, deleteUser, editUserPage, postUpdateUser,
-    uploadFile,handleUploadFile
+    uploadFile,handleUploadFile, handleUploadMultipleFiles, 
 }
